@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./utils/db-connection");
+const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 
