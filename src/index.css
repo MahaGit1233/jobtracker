@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body.dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.custom-sidebar {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark .custom-sidebar {
+  background-color: #90A1B9;
+  color: #000;
+}
+
+body.light .custom-sidebar {
+  background-color: #51575e;
+  color: #fff;
+}
+
+.custom-sidebar .nav-item {
+  color: inherit !important;
+  text-decoration: none;
+}

@@ -1,24 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import { Navigate, Route, Routes } from "react-router-dom";
+import Register from "./components/Register/Register";
+import ForgotPassword from "./components/Register/ForgotPassword";
+import { useEffect, useState } from "react";
+import ApplicationLayout from "./components/ApplicationLayout";
+import Tracker from "./components/Tracker";
+import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
+import { ThemeProvider } from "./components/Context/ThemeContext";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const onLoginSuccess = () => setIsLoggedIn(true);
+
+  const logoutHandler = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              !isLoggedIn ? (
+                <Register onLogin={onLoginSuccess} />
+              ) : (
+                <Navigate to="/application" replace />
+              )
+            }
+          />
+          <Route
+            path="/application"
+            element={
+              isLoggedIn ? (
+                <ApplicationLayout onLogout={logoutHandler} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/tracker"
+            element={<Tracker onLogout={logoutHandler} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile onLogout={logoutHandler} />}
+          />
+          <Route
+            path="/dashboard"
+            element={<Dashboard onLogout={logoutHandler} />}
+          />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 
