@@ -15,7 +15,7 @@ const profileRouter = require("./routes/profileRouter");
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
-  { flags: "a" }
+  { flags: "a" },
 );
 
 app.use(cors());
@@ -38,15 +38,17 @@ app.use("/register", registerRouter);
 app.use("/application", jobApplicationRouter);
 app.use("/profile", profileRouter);
 
-app.use(express.static(path.join(__dirname, "build")));
+// app.use(express.static(path.join(__dirname, "build")));
 
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+// app.get(/.*/, (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
 
-db.sync({ force: true })
+const Port = process.env.PORT || 4002;
+
+db.sync()
   .then(() => {
-    app.listen(4002, () => {
+    app.listen(Port, () => {
       console.log("Server is Running on http://localhost:4002");
     });
   })

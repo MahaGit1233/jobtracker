@@ -114,31 +114,35 @@ const updateJob = async (req, res) => {
     job.remindbeforedays = remindbeforedays || job.remindbeforedays;
     job.document = document || job.document;
 
-    let content;
+    let content, sub;
 
     if (status && status !== oldStatus) {
       job.status = status;
 
-      if (status === "applied") {
+      if (status === "Applied") {
         if (lastdate) job.lastdate = lastdate;
-        content=`Hi ${job.User.name},\n\nJust a reminder that the interview for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`
-      } else if (status === "interviewed") {
+        sub = "Reminder: Interview Scheduled";
+        content = `Hi ${job.User.name},\n\nJust a reminder that the interview for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`;
+      } else if (status === "Interviewed") {
         if (lastdate) job.lastdate = lastdate;
-        content=`Hi ${job.User.name},\n\nJust a reminder that the results of your interview for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`
-      } else if (status === "offered") {
+        sub = "Reminder: Interview Results";
+        content = `Hi ${job.User.name},\n\nJust a reminder that the results of your interview for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`;
+      } else if (status === "Offered") {
         if (lastdate) job.lastdate = lastdate;
-        content=`Hi ${job.User.name},\n\nJust a reminder that the Offer Letter for your application to ${job.companyname} (${job.jobtitle}) will be sent to you on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`
-      } else if (status === "rejected" || status === "dropped") {
+        sub = "Reminder: Job Offer";
+        content = `Hi ${job.User.name},\n\nJust a reminder that the Offer Letter for your application to ${job.companyname} (${job.jobtitle}) will be sent to you on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`;
+      } else if (status === "Rejected" || status === "Dropped") {
         job.lastdate = lastdate || new Date();
-        content=`Hi ${job.User.name},\n\nJust a reminder that the you are either rejected or you dropped for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`
+        sub = "Reminder: Application Outcome";
+        content = `Hi ${job.User.name},\n\nJust a reminder that the you are either rejected or you dropped for your application to ${job.companyname} (${job.jobtitle}) is on ${job.lastdate}.\n\nGood luck!\n\nYour Job Tracker`;
       }
     }
 
     await job.save();
 
     if (status && status !== oldStatus) {
-      const subject = "Reminder: Follow up on your job application";
       let textContent = content;
+      let subject = sub;
 
       if (job.lastdate) {
         textContent += `\n\nImportant date associated with this status: ${job.lastdate}`;

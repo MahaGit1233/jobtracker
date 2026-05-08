@@ -2,7 +2,6 @@ const { CronJob } = require("cron");
 const Sib = require("sib-api-v3-sdk");
 const { Users } = require("../modals");
 const { JobApplication } = require("../modals");
-const { Op } = require("sequelize");
 
 const client = Sib.ApiClient.instance;
 const apiKey = client.authentications["api-key"];
