@@ -6,6 +6,7 @@ import CompanyForm from "./CompanyForm";
 import { NavLink } from "react-router-dom";
 import { Briefcase, Building } from "react-bootstrap-icons";
 import { ThemeContext } from "./Context/ThemeContext";
+import API_BASE_URL from "../config";
 
 const Tracker = (props) => {
   const [showApplicationForm, setShowApplicationForm] = useState(false);
@@ -39,7 +40,7 @@ const Tracker = (props) => {
   const fetchJobs = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4002/application/jobs/getjobs?page=${currentPage}&limit=${itemsPerPage}`,
+        `${API_BASE_URL}/application/jobs/getjobs?page=${currentPage}&limit=${itemsPerPage}`,
         {
           method: "GET",
           headers: {
@@ -52,7 +53,7 @@ const Tracker = (props) => {
       console.log(data.jobs);
       setJobs(data.jobs);
       setJobPaginationData(data);
-      alert(data.message);
+      // alert(data.message);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +62,7 @@ const Tracker = (props) => {
   const fetchCompanies = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4002/application/companies/getcompanies?page=${currentPage}&limit=${itemsPerPage}`,
+        `${API_BASE_URL}/application/companies/getcompanies?page=${currentPage}&limit=${itemsPerPage}`,
         {
           method: "GET",
           headers: {
@@ -74,7 +75,7 @@ const Tracker = (props) => {
       console.log(data.companies);
       setCompanies(data.companies);
       setCompanyPaginationData(data);
-      alert(data.message);
+      // alert(data.message);
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +93,7 @@ const Tracker = (props) => {
 
   const deleteJobHandler = async (id) => {
     const response = await fetch(
-      `http://localhost:4002/application/jobs/deletejob/${id}`,
+      `${API_BASE_URL}/application/jobs/deletejob/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -114,7 +115,7 @@ const Tracker = (props) => {
 
   const deleteCompanyHandler = async (id) => {
     const response = await fetch(
-      `http://localhost:4002/application/companies/deletecompany/${id}`,
+      `${API_BASE_URL}/application/companies/deletecompany/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -316,7 +317,7 @@ const Tracker = (props) => {
                 />
                 <Button
                   onClick={() => setShowApplicationForm(true)}
-                  variant="outline-dark"
+                  variant={theme === "light" ? "outline-dark" : "outline-light"}
                   style={{ height: "100%" }}
                 >
                   Add New Job
@@ -392,7 +393,7 @@ const Tracker = (props) => {
               />
               <Button
                 onClick={() => setCompanyForm(true)}
-                variant="outline-dark"
+                variant={theme === "light" ? "outline-dark" : "outline-light"}
                 style={{ height: "100%" }}
               >
                 Add a Company

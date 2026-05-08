@@ -3,6 +3,7 @@ import { Button, Card, Container, Image } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import ProfileForm from "./ProfileForm";
 import { ThemeContext } from "./Context/ThemeContext";
+import API_BASE_URL from "../config";
 
 const Profile = (props) => {
   const [showProfileForm, setShowProfileForm] = useState(false);
@@ -15,7 +16,7 @@ const Profile = (props) => {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch("http://localhost:4002/profile/getprofile", {
+      const response = await fetch(`${API_BASE_URL}/profile/getprofile`, {
         method: "GET",
         headers: {
           Authorization: token,
@@ -25,7 +26,7 @@ const Profile = (props) => {
       const data = await response.json();
       console.log(data.profile);
       setProfile(data.profile);
-      alert(data.message);
+      // alert(data.message);
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +186,7 @@ const Profile = (props) => {
               </div>
             ))
           ) : (
-            <div style={{ textAlign: "center", marginTop: "2rem" }}>
+            <div style={{ textAlign: "center", marginTop: "18rem" }}>
               <h3>No profile added yet.</h3>
               <Button
                 onClick={() => setShowProfileForm(true)}

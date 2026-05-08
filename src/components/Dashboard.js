@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Sidebar from "./Sidebar";
+import API_BASE_URL from "../config";
 
 const Dashboard = (props) => {
   const [jobs, setJobs] = useState([]);
@@ -22,7 +23,7 @@ const Dashboard = (props) => {
   useEffect(() => {
     const fetchJobs = async () => {
       const res = await fetch(
-        "http://localhost:4002/application/jobs/getjobs",
+        `${API_BASE_URL}/application/jobs/getjobs`,
         {
           headers: { Authorization: token },
         }
@@ -68,7 +69,9 @@ const Dashboard = (props) => {
       </Container>
       <Container>
         {!jobs || jobs.length === 0 ? (
-          <p>No job applications yet.</p>
+          <h1 style={{ textAlign: "center", marginTop: "18rem" }}>
+            No job applications yet.
+          </h1>
         ) : (
           <div>
             <h2 className="mb-3">Application Status Distribution</h2>

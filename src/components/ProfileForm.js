@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import "./JobApplication.css";
+import API_BASE_URL from "../config";
 
 const Backdrop2 = (props) => {
   const [photo, setPhoto] = useState("");
@@ -61,8 +62,8 @@ const Backdrop2 = (props) => {
     };
 
     const url = props.editProfile
-      ? `http://localhost:4002/profile/updateprofile/${props.editProfile.id}`
-      : `http://localhost:4002/profile/addprofile`;
+      ? `${API_BASE_URL}/profile/updateprofile/${props.editProfile.id}`
+      : `${API_BASE_URL}/profile/addprofile`;
 
     const method = props.editProfile ? "PUT" : "POST";
 
@@ -95,68 +96,87 @@ const Backdrop2 = (props) => {
 
   return (
     <div className="backdrop">
-      <Form onSubmit={formSubmitHandler}>
-        <Form.Group>
-          <Form.Label>Profile Photo:</Form.Label>
-          <Form.Control
-            type="url"
-            value={photo}
-            onChange={photoChangeHandler}
-            placeholder="Place you profile photo url"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Phone Number:</Form.Label>
-          <Form.Control
-            type="number"
-            value={phone}
-            onChange={phoneChangeHandler}
-            placeholder="Enter your phone number"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Date of Birth:</Form.Label>
-          <Form.Control type="date" value={date} onChange={dateChangeHandler} />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Address:</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={address}
-            onChange={addressChangeHandler}
-            placeholder="Add your Address"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Summary:</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={summary}
-            onChange={summaryChangeHandler}
-            placeholder="Add something about yourself"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Career Goals:</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={goals}
-            onChange={goalsChangeHandler}
-            placeholder="Add what you want to acheive"
-          />
-        </Form.Group>
-        <div>
-          <Button onClick={props.onClose} variant="outline-light">
-            Close
-          </Button>
-          <Button type="submit" variant="outline-light">
-            {props.editProfile ? "Update" : "Add"}
-          </Button>
-        </div>
-      </Form>
+      <Card className="profilecard">
+        <Form className="jobform" onSubmit={formSubmitHandler}>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Profile Photo:</Form.Label>
+            <Form.Control
+              type="url"
+              className="jobforminput"
+              value={photo}
+              onChange={photoChangeHandler}
+              placeholder="Place you profile photo url"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Phone Number:</Form.Label>
+            <Form.Control
+              type="number"
+              className="jobforminput"
+              value={phone}
+              onChange={phoneChangeHandler}
+              placeholder="Enter your phone number"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Date of Birth:</Form.Label>
+            <Form.Control
+              type="date"
+              className="jobforminput"
+              value={date}
+              onChange={dateChangeHandler}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Address:</Form.Label>
+            <Form.Control
+              as="textarea"
+              className="jobforminput"
+              rows={3}
+              value={address}
+              onChange={addressChangeHandler}
+              placeholder="Add your Address"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Summary:</Form.Label>
+            <Form.Control
+              as="textarea"
+              className="jobforminput"
+              rows={3}
+              value={summary}
+              onChange={summaryChangeHandler}
+              placeholder="Add something about yourself"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Career Goals:</Form.Label>
+            <Form.Control
+              as="textarea"
+              className="jobforminput"
+              rows={3}
+              value={goals}
+              onChange={goalsChangeHandler}
+              placeholder="Add what you want to acheive"
+            />
+          </Form.Group>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              gap: "1%",
+              paddingBottom: "1rem",
+            }}
+          >
+            <Button onClick={props.onClose} variant="outline-dark">
+              Close
+            </Button>
+            <Button type="submit" variant="outline-dark">
+              {props.editProfile ? "Update" : "Add"}
+            </Button>
+          </div>
+        </Form>
+      </Card>
     </div>
   );
 };

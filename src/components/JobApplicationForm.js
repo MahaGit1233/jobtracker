@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import "./JobApplication.css";
+import API_BASE_URL from "../config";
 
 const Backdrop = (props) => {
   const [title, setTitle] = useState("");
@@ -72,8 +73,8 @@ const Backdrop = (props) => {
     };
 
     const url = props.editJob
-      ? `http://localhost:4002/application/jobs/updatejob/${props.editJob.id}`
-      : `http://localhost:4002/application/jobs/addnewjob`;
+      ? `${API_BASE_URL}/application/jobs/updatejob/${props.editJob.id}`
+      : `${API_BASE_URL}/application/jobs/addnewjob`;
 
     const method = props.editJob ? "PUT" : "POST";
 
@@ -104,88 +105,112 @@ const Backdrop = (props) => {
 
   return (
     <div className="backdrop">
-      <Form onSubmit={formSubmitHandler}>
-        <Form.Group>
-          <Form.Label>Job Title:</Form.Label>
-          <Form.Control
-            type="text"
-            value={title}
-            onChange={titleChangeHandler}
-            placeholder="Enter the title of the job"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Company Name:</Form.Label>
-          <Form.Control
-            type="text"
-            value={companyName}
-            onChange={companyNameChangeHandler}
-            placeholder="Enter Company name"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Job Location </Form.Label>
-          <Form.Control
-            type="text"
-            value={location}
-            onChange={locationChangeHandler}
-            placeholder="Enter the location of the job "
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Status:</Form.Label>
-          <Form.Select value={status} onChange={statusChangeHandler}>
-            <option value="">--Select Status--</option>
-            <option>Bookmarked</option>
-            <option>Applied</option>
-            <option>Interviewed</option>
-            <option>Offered</option>
-            <option>Rejected</option>
-            <option>I Dropped it</option>
-          </Form.Select>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Notes:</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={5}
-            value={notes}
-            onChange={notesChangeHandler}
-            placeholder="Enter your thoughts on the job"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Last Date:</Form.Label>
-          <Form.Control
-            type="date"
-            value={lastDate}
-            onChange={lastDateChangeHandler}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Remind me before (days):</Form.Label>
-          <Form.Control
-            type="number"
-            min="0"
-            placeholder="e.g., 3"
-            value={remindBeforeDays}
-            onChange={(e) => setRemindBeforeDays(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Document:</Form.Label>
-          <Form.Control type="file" onChange={documentChangeHandler} />
-        </Form.Group>
-        <div>
-          <Button onClick={props.onClose} variant="outline-light">
-            Close
-          </Button>
-          <Button type="submit" variant="outline-light">
-            {props.editJob ? "Update" : "Add"}
-          </Button>
-        </div>
-      </Form>
+      <Card className="jobcard">
+        <Form className="jobform" onSubmit={formSubmitHandler}>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Job Title:</Form.Label>
+            <Form.Control
+              type="text"
+              className="jobforminput"
+              value={title}
+              onChange={titleChangeHandler}
+              placeholder="Enter the title of the job"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Company Name:</Form.Label>
+            <Form.Control
+              type="text"
+              className="jobforminput"
+              value={companyName}
+              onChange={companyNameChangeHandler}
+              placeholder="Enter Company name"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Job Location </Form.Label>
+            <Form.Control
+              type="text"
+              className="jobforminput"
+              value={location}
+              onChange={locationChangeHandler}
+              placeholder="Enter the location of the job "
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Status:</Form.Label>
+            <Form.Select
+              className="jobforminput"
+              value={status}
+              onChange={statusChangeHandler}
+            >
+              <option value="">--Select Status--</option>
+              <option>Bookmarked</option>
+              <option>Applied</option>
+              <option>Interviewed</option>
+              <option>Offered</option>
+              <option>Rejected</option>
+              <option>I Dropped it</option>
+            </Form.Select>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Notes:</Form.Label>
+            <Form.Control
+              as="textarea"
+              className="jobforminput"
+              rows={5}
+              value={notes}
+              onChange={notesChangeHandler}
+              placeholder="Enter your thoughts on the job"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Last Date:</Form.Label>
+            <Form.Control
+              type="date"
+              className="jobforminput"
+              value={lastDate}
+              onChange={lastDateChangeHandler}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">
+              Remind me before (days):
+            </Form.Label>
+            <Form.Control
+              type="number"
+              className="jobforminput"
+              min="0"
+              placeholder="e.g., 3"
+              value={remindBeforeDays}
+              onChange={(e) => setRemindBeforeDays(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="jobformlabel">Document:</Form.Label>
+            <Form.Control
+              type="file"
+              className="jobforminput"
+              onChange={documentChangeHandler}
+            />
+          </Form.Group>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              gap: "1%",
+              paddingBottom: "1rem",
+            }}
+          >
+            <Button onClick={props.onClose} variant="outline-dark">
+              Close
+            </Button>
+            <Button type="submit" variant="outline-dark">
+              {props.editJob ? "Update" : "Add"}
+            </Button>
+          </div>
+        </Form>
+      </Card>
     </div>
   );
 };

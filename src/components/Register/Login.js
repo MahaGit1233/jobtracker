@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "./signup.css";
+import API_BASE_URL from "../../config";
 
 const Login = (props) => {
   const [enteredMail, setEnteredMail] = useState("");
@@ -25,7 +26,7 @@ const Login = (props) => {
     }
 
     try {
-      const response = await fetch("http://localhost:4002/register/login", {
+      const response = await fetch(`${API_BASE_URL}/register/login`, {
         method: "POST",
         body: JSON.stringify({
           email: enteredMail,

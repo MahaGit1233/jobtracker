@@ -8,7 +8,7 @@ const ApplicationLayout = (props) => {
       <Container>
         <Sidebar onLogout={props.onLogout} />
       </Container>
-      <Container style={{ marginLeft: "220px", padding: "2rem" }}>
+      <Container style={{ textAlign: "center", marginTop: "18rem" }}>
         <h1>Welcome to Job Tracker!</h1>
         <p>Use the sidebar to navigate to Tracker, Profile, or Dashboard.</p>
       </Container>

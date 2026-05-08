@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Form, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "./signup.css";
+import API_BASE_URL from "../../config";
 
 const ForgotPassword = () => {
   const [enteredMail, setEnteredMail] = useState("");
@@ -13,7 +14,7 @@ const ForgotPassword = () => {
   const forgotPasswordHandler = (event) => {
     event.preventDefault();
 
-    fetch("http://localhost:4002/register/forgotpassword", {
+    fetch(`${API_BASE_URL}/register/forgotpassword`, {
       method: "POST",
       body: JSON.stringify({
         email: enteredMail,

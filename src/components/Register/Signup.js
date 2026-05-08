@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import "./signup.css";
+import API_BASE_URL from "../../config";
 
 const Signup = () => {
   const [enteredName, setEnteredName] = useState("");
@@ -29,7 +30,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:4002/register/signup", {
+      const response = await fetch(`${API_BASE_URL}/register/signup`, {
         method: "POST",
         body: JSON.stringify({
           name: enteredName,
